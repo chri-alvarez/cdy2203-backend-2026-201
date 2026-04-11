@@ -82,6 +82,7 @@ Especificación en formato YAML. Compatible con la mayoría de herramientas.
 | Método | Ruta | Protegido | Descripción |
 |--------|------|-----------|-------------|
 | POST | /login | No | Autenticarse y obtener token |
+| POST | /users/register | Sí | Registrar usuario con contraseña hasheada |
 | GET | /pets | No | Listar todas las mascotas |
 | POST | /pets | Sí | Crear nueva mascota |
 | GET | /pets/{id} | No | Obtener mascota por ID |
@@ -114,6 +115,20 @@ curl -X POST http://localhost:8080/login \
   -d '{
     "username": "admin",
     "password": "password123"
+  }'
+```
+
+**Para registrar un usuario**:
+```bash
+TOKEN="<token_jwt>"
+
+curl -X POST http://localhost:8080/users/register \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "recepcionista01",
+    "email": "recepcion@duocvet.cl",
+    "password": "MiClaveSegura2026!"
   }'
 ```
 

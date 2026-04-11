@@ -106,6 +106,7 @@ Una vez que el servidor esté ejecutándose:
 
 ### 🔐 Autenticación
 - `POST /login` - Obtener token JWT
+- `POST /users/register` - Registrar usuario protegido
 
 ### 🐾 Mascotas
 - `GET /pets` - Listar todas
@@ -174,6 +175,14 @@ curl "http://localhost:8080/pets/search?species=Perro&location=Santiago"
 curl -X POST http://localhost:8080/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"password123"}'
+```
+
+### Registrar Usuario (Con Token)
+```bash
+curl -X POST http://localhost:8080/users/register \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"recepcionista01","email":"recepcion@duocvet.cl","password":"MiClaveSegura2026!"}'
 ```
 
 ### Crear Mascota (Con Token)

@@ -136,6 +136,45 @@ components:
           description: Contraseña
           example: password123
 
+    UserRegistrationRequest:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+          description: Nombre de usuario único
+          example: recepcionista01
+        email:
+          type: string
+          format: email
+          description: Correo electrónico único del usuario
+          example: recepcion@duocvet.cl
+        password:
+          type: string
+          format: password
+          description: Contraseña en texto plano enviada sólo al registrar; se almacena como hash BCrypt
+          example: MiClaveSegura2026!
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Identificador del usuario creado
+          example: 7
+        username:
+          type: string
+          description: Nombre de usuario registrado
+          example: recepcionista01
+        email:
+          type: string
+          format: email
+          description: Correo electrónico registrado
+          example: recepcion@duocvet.cl
+
     Error:
       type: object
       properties:
@@ -261,6 +300,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+  /users/register:
+    post:
+      tags:
+        - Autenticación
+      summary: Registrar nuevo usuario
+      description: Crea un usuario nuevo en la base de datos y almacena la contraseña como hash BCrypt. Esta ruta requiere autenticación JWT válida.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationRequest'
+      responses:
+        '201':
+          description: Usuario registrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Datos inválidos o usuario duplicado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No autenticado
+        '403':
+          description: Token inválido o expirado
 
   /patients:
     get:

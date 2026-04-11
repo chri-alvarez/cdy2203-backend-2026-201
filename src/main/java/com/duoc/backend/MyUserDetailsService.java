@@ -19,15 +19,14 @@ import org.slf4j.LoggerFactory;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-        Logger logger
-        = LoggerFactory.getLogger(MyUserDetailsService.class);;
+    Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 
     @Autowired
     private UserRepository userRepository;
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
@@ -37,6 +36,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 }

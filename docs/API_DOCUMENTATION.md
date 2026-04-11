@@ -56,6 +56,46 @@ Autentica un usuario y retorna un token JWT para usar en otras operaciones prote
 
 ---
 
+### POST /users/register
+Registra un nuevo usuario en la base de datos. La contraseña se recibe en el request pero se almacena hasheada con BCrypt y no se devuelve en la respuesta.
+
+**Acceso**: Protegido (requiere JWT)
+
+**Headers Requeridos**:
+- `Authorization: Bearer <token>`
+- `Content-Type: application/json`
+
+**Request Body**:
+```json
+{
+  "username": "recepcionista01",
+  "email": "recepcion@duocvet.cl",
+  "password": "MiClaveSegura2026!"
+}
+```
+
+**Response** (201 Created):
+```json
+{
+  "id": 7,
+  "username": "recepcionista01",
+  "email": "recepcion@duocvet.cl"
+}
+```
+
+**Response** (400 Bad Request):
+```json
+{
+  "message": "Username already exists"
+}
+```
+
+**Response** (401 Unauthorized): Endpoint protegido sin token válido.
+
+**Nota**: Si existen usuarios antiguos con contraseña en texto plano, deben migrarse a BCrypt para que el login siga funcionando.
+
+---
+
 ## Mascotas (Pets)
 
 ### GET /pets

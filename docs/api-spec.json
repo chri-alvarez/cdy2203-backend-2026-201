@@ -64,6 +64,83 @@
     },
 
     {
+      "id": "auth_register",
+      "method": "POST",
+      "path": "/users/register",
+      "summary": "Registrar nuevo usuario",
+      "description": "Crea un usuario y almacena la contraseña de forma segura usando BCrypt. Requiere JWT válido.",
+      "protected": true,
+      "tags": ["Autenticación"],
+      "parameters": [],
+      "requestBody": {
+        "required": true,
+        "contentType": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "example": "recepcionista01",
+              "required": true
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "example": "recepcion@duocvet.cl",
+              "required": true
+            },
+            "password": {
+              "type": "string",
+              "format": "password",
+              "example": "MiClaveSegura2026!",
+              "required": true
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Usuario registrado exitosamente",
+          "contentType": "application/json",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 7
+              },
+              "username": {
+                "type": "string",
+                "example": "recepcionista01"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "recepcion@duocvet.cl"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Datos inválidos o usuario duplicado",
+          "contentType": "application/json",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Username already exists"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Se requiere autenticación JWT válida"
+        }
+      }
+    },
+
+    {
       "id": "pets_list",
       "method": "GET",
       "path": "/pets",
