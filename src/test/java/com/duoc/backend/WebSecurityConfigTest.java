@@ -1,5 +1,6 @@
 package com.duoc.backend;
 
+import com.duoc.testsupport.TestSecurityEndpointsController;
 import io.jsonwebtoken.Jwts;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = TestSecurityEndpointsController.class)
 @AutoConfigureMockMvc(addFilters = true)
-@Import({WebSecurityConfig.class, JWTAuthorizationFilter.class})
+@Import({WebSecurityConfig.class, JWTAuthorizationFilter.class, TestSecurityEndpointsController.class})
 @ActiveProfiles("default")
 class WebSecurityConfigTest {
 
